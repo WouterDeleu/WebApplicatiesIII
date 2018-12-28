@@ -24,5 +24,10 @@ namespace Banking.Models
             base.Withdraw(amount);
             base.Withdraw(WithdrawCost);
         }
+
+        public override string Print()
+        {
+            return $"Savingsaccount balance = {Balance}";
+        }
     }
 }

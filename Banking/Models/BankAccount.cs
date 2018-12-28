@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Banking.Models
 {
-    class BankAccount
+    abstract class BankAccount
     {
         #region Fields
         private string _accountNumber;
@@ -36,14 +36,16 @@ namespace Banking.Models
             Balance += amount;
         }
 
-        public bool Equals(object obj)
+        public override bool Equals(object obj)
         {
-
+            BankAccount account = obj as BankAccount;
+            if (account == null) return false;
+            return AccountNumber == account.AccountNumber;
         }
 
-        public int getHashCode()
+        public override int GetHashCode()
         {
-
+            return AccountNumber?.GetHashCode() ?? 0;
         }
 
         public IEnumerable<Transaction> GetTransactions(DateTime? from, DateTime till)
@@ -59,9 +61,9 @@ namespace Banking.Models
             return translist;
         }
 
-        public string ToString()
+        public override string ToString()
         {
-
+            return $"{AccountNumber} - {Balance}";
         }
 
         public virtual void Withdraw(decimal amount)
@@ -70,6 +72,8 @@ namespace Banking.Models
             Balance = Balance - amount;
             
         }
+
+        public abstract string Print();
         #endregion
     }
 }
